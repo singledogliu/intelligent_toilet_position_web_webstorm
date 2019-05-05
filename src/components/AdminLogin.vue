@@ -13,7 +13,7 @@
         <input class="bt_input" placeholder="密码" type="password" v-model="password"/>
       </div>
       <button class="loginBut" type="button" v-on:click="login">登录</button>
-      <router-link class="loginBut" tag="button" to="/Admin">注册</router-link>
+      <router-link class="loginBut" tag="button" to="/AdminRegister">注册</router-link>
     </div>
   </div>
   </body>
@@ -52,13 +52,15 @@
               var stat = res.bodyText.split(",")[0];
               var adminName = res.bodyText.split(",")[1];
               if (stat == "登录成功") {
+                sessionStorage.setItem("name", adminName);
+                sessionStorage.setItem("account", this.account);
                 //跳转到管理员功能界面
                 this.$router.push({
                   path: '/Admin',
-                  query: {
-                    name: adminName,
-                    account: this.account
-                  }
+                  // query: {
+                  //   name: adminName,
+                  //   account: this.account
+                  // }
                 })
               }
             });
@@ -75,8 +77,6 @@
   body {
     text-align: center;
     height: 100%;
-    /*background: url('../assets/bgImg.jpg') repeat;*/
-
   }
 
   .bgImg {

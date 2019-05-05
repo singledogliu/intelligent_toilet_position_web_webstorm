@@ -1,60 +1,57 @@
 <template>
   <div class="logCon">
     <div class="line">
-      <span>新密码:</span>
-      <input v-model="NewPassword" class="bt_input" type="password" placeholder="请输入新密码">
+      <span>账号:</span>
+      <input class="bt_input" placeholder="请输入新账号" type="text" v-model="NewAccount">
     </div>
     <div class="line">
-      <span>旧密码:</span>
-      <input v-model="OldPassword" class="bt_input" type="password" placeholder="请输入旧密码">
+      <span>密码:</span>
+      <input class="bt_input" placeholder="请输入密码" type="password" v-model="Password">
     </div>
-    <button @click="Submit" type="button" class="loginBut">提交</button>
+    <button @click="Submit" class="loginBut" type="button">提交</button>
   </div>
 </template>
 
 <script>
   export default {
-    name: "ModifyPassword",
+    name: "ModifyAccount",
     data() {
       return {
         Account: sessionStorage.getItem("account"),
-        NewPassword: "",
-        OldPassword: ""
+        NewAccount: "",
+        Password: "",
       };
     },
     methods: {
       Submit: function () {
-        if (this.NewPassword == null || this.NewPassword == '') {
-          alert("新密码为空，请填写新密码");
-        } else if (this.OldPassword == null || this.OldPassword == '') {
-          alert("原密码为空，请填写原密码");
+        if (this.NewAccount == null || this.NewAccount == '') {
+          alert("新账号为空，请填写新账号");
+        } else if (this.Password == null || this.Password == '') {
+          alert("密码为空，请填写密码");
         } else {
           this.$http
             .post(
               "http://127.0.0.1:8080/Admin/modifyInformation",
               {
-                password: this.NewPassword,
-                oldPassword: this.OldPassword,
                 adminAccount: this.Account,
-                action: "修改密码"
+                account: this.NewAccount,
+                oldPassword: this.Password,
+                action: "修改账号"
               },
               {
                 emulateJSON: true
               }
             )
             .then(function (res) {
-              console.log(res);
-              if (res.body == 0) {
+              if (res.data == 0) {
                 alert("修改失败,请重试");
               } else if (res.data == 2) {
-                alert("原密码错误，请重试");
-                this.oldPassword = '';
+                alert("密码错误，请重填");
+                this.Password = '';
               } else {
                 alert("修改成功");
-                // const dialog = window.confirm("修改成功，请重新登录");
-                // if (dialog == true || dialog == false) {
-                //   this.$router.push("/");
-                // }
+                sessionStorage.setItem("account", this.NewAccount);
+                this.Account = this.NewAccount;
               }
             });
         }
@@ -97,6 +94,7 @@
     margin-left: 130px;
     margin-top: 5px;
   }
+
   .logCon span {
     font-size: 18px;
     height: 40px;

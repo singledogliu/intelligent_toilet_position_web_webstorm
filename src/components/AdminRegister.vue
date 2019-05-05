@@ -1,43 +1,43 @@
 <template>
   <body>
-  <img src="../assets/bgImg.jpg" class="bgImg"/>
+  <img class="bgImg" src="../assets/bgImg.jpg"/>
   <div id="content">
     <div class="bidTitle">厕位管理系统注册</div>
     <div class="logCon">
       <div class="line">
         <span>账号:&nbsp;&nbsp;&nbsp;</span>
         <input
-          v-model="account"
           class="bt_input"
-          type="text"
           placeholder="账号"
+          type="text"
+          v-model="account"
         />
       </div>
       <div class="line">
         <span>密码:&nbsp;&nbsp;&nbsp;</span>
         <input
-          v-model="password"
           class="bt_input"
-          type="password"
           placeholder="密码"
+          type="password"
+          v-model="password"
         />
       </div>
       <div class="line">
         <span>姓名:&nbsp;&nbsp;&nbsp;</span>
         <input
-          v-model="name"
           class="bt_input"
-          type="text"
           placeholder="姓名"
+          type="text"
+          v-model="name"
         />
       </div>
       <div class="line">
         <span>电话:&nbsp;&nbsp;&nbsp;</span>
         <input
-          v-model="phone"
           class="bt_input"
-          type="text"
           placeholder="电话"
+          type="text"
+          v-model="phone"
         />
       </div>
       <div class="line">
@@ -45,27 +45,27 @@
       >验证码:</span
       >
         <input
-          v-model="identifyingCode"
           class="bt_input"
-          type="text"
           placeholder="请填写手机接收到的验证码"
+          type="text"
+          v-model="identifyingCode"
         />
-        <button v-on:click="identify" type="button" class="identifyBut">获取验证码</button>
+        <button class="identifyBut" type="button" v-on:click="identify">获取验证码</button>
       </div>
       <div class="line">
         <span>区域:&nbsp;&nbsp;&nbsp;</span>
         <input
-          v-model="regionalCode"
           class="bt_input"
-          type="text"
           placeholder="所负责区域"
+          type="text"
+          v-model="regionalCode"
         />
       </div>
       <!--      <button v-on:click="login" type="button" class="loginBut">-->
       <!--        返回登录-->
       <!--      </button>-->
-      <router-link to="/" tag="button" class="loginBut">返回登录</router-link>
-      <button v-on:click="register" type="button" class="loginBut">
+      <router-link class="loginBut" tag="button" to="/">返回登录</router-link>
+      <button class="loginBut" type="button" v-on:click="register">
         注册
       </button>
     </div>
@@ -129,6 +129,7 @@
                 alert("注册失败，请重试");
               }
               if (stat == "注册成功") {
+                sessionStorage.setItem("name", adminName);
                 //跳转到管理员功能界面
                 this.$router.push({
                   path: '/Admin',
@@ -141,7 +142,7 @@
             });
         }
       },
-      identify: function (event) {
+      identify: function () {
         if (this.phone == null || this.phone == '') {
           alert("电话号码为空，请填写电话号码");
         } else {

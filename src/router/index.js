@@ -6,6 +6,11 @@ import AdminRegister from '../components/AdminRegister'
 import Admin from '../components/Admin'
 import Monitor from '../components/Monitor'
 import ModifyPassword from '../components/ModifyPassword'
+import ModifyPhone from '../components/ModifyPhone'
+import ModifyAccount from '../components/ModifyAccount'
+import ModifyAdmin from '../components/ModifyAdmin'
+import ViewData from '../components/ViewData'
+import AdminLogout from '../components/AdminLogout'
 
 
 Vue.use(Router)
@@ -46,7 +51,31 @@ const router = new Router({
           name: 'ModifyPassword',
           component: ModifyPassword,
         },
-
+        {
+          path: '/Admin/ModifyPhone',
+          name: 'ModifyPhone',
+          component: ModifyPhone,
+        },
+        {
+          path: '/Admin/ModifyAccount',
+          name: 'ModifyAccount',
+          component: ModifyAccount,
+        },
+        {
+          path: '/Admin/ModifyAdmin',
+          name: 'ModifyAdmin',
+          component: ModifyAdmin,
+        },
+        {
+          path: '/Admin/ViewData',
+          name: 'ViewData',
+          component: ViewData,
+        },
+        {
+          path: '/Admin/AdminLogout',
+          name: 'AdminLogout',
+          component: AdminLogout,
+        },
       ]
     },
   ],

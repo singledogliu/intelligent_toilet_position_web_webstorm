@@ -2,21 +2,20 @@
   <div>
     <div class="navbar navbar-default" role="navigation">
       <div class="navbar-header">
-        <a class="" href="#"><span class="navbar-brand"/><span class="fa fa-paper-plane"/></a></div>
+        <a class="" href="#"><span class="navbar-brand"/></a></div>
       <div class="navbar-collapse collapse" style="height: 1px;">
         <ul class="nav navbar-nav navbar-right" id="main-menu">
-          <li class="dropdown hidden-xs">
+          <li class="dropdown hidden-xs" v-on:click="AdminMenu">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="glyphicon glyphicon-user padding-right-small"
                               style="position:relative;top: 3px;"></span> {{name}}
               <i class="fa fa-caret-down"></i>
             </a>
 
-            <ul class="dropdown-menu">
-              <!--            <li><a href="AdminLogin.html" tabindex="-1">Sign out</a></li>-->
-              <router-link to="/" tag="li" tabindex="-1">&nbsp&nbsp&nbsp&nbspSign out</router-link>
-              <router-link to="/" tag="li" tabindex="-1">&nbsp&nbsp&nbsp&nbspLogout</router-link>
-              <!--            <li><a href="#" tabindex="-1">Logout</a></li>-->
+            <ul class="adminMenu" v-show="AdminActionShow" @mouseleave="hidden">
+              <router-link tag="li" to="/" @click.native="AdminSignOut">&nbspSign out</router-link>
+              <router-link tabindex="-1" tag="li" to="/Admin/AdminLogout" @click.native="AdminLogout">&nbspLogout
+              </router-link>
             </ul>
           </li>
         </ul>
@@ -30,18 +29,18 @@
             class="fa fa-fw fa-dashboard"></i> 修改信息<i class="fa fa-collapse"></i></a></li>
           <li v-show="FirstShow">
             <ul class="dashboard-menu nav nav-list collapse in">
-              <!--            <li><a href="#"><span class="fa fa-caret-right"></span>-->
-              <router-link tag="li" to="/Admin/ModifyPassword">&nbsp&nbsp&nbsp&nbsp<span
+              <router-link tag="li" to="/Admin/ModifyPassword" @click.native="ModifyPassword">&nbsp&nbsp&nbsp&nbsp<span
                 class="fa fa-caret-right"></span> 修改密码
               </router-link>
-              <!--            </a></li>-->
-              <!--            <router-link tag="li" to="/Admin/ModifyPassword">&nbsp&nbsp&nbsp&nbsp<span class="fa fa-caret-right"></span> 修改电话号码</router-link>-->
-              <!--            <router-link tag="li" to="/Admin/ModifyPassword">&nbsp&nbsp&nbsp&nbsp<span class="fa fa-caret-right"></span> 修改账号</router-link>-->
-              <!--            <router-link tag="li" to="/Admin/ModifyPassword">&nbsp&nbsp&nbsp&nbsp<span class="fa fa-caret-right"></span> 更换管理员</router-link>-->
-
-              <li><a href="#"><span class="fa fa-caret-right"></span> 修改电话号码</a></li>
-              <li><a href="#"><span class="fa fa-caret-right"></span> 修改账号</a></li>
-              <li><a href="#"><span class="fa fa-caret-right"></span> 更换管理员</a></li>
+              <router-link tag="li" to="/Admin/ModifyPhone" @click.native="ModifyPhone">&nbsp&nbsp&nbsp&nbsp<span
+                class="fa fa-caret-right"></span> 修改电话号码
+              </router-link>
+              <router-link tag="li" to="/Admin/ModifyAccount" @click.native="ModifyAccount">&nbsp&nbsp&nbsp&nbsp<span
+                class="fa fa-caret-right"></span> 修改账号
+              </router-link>
+              <router-link tag="li" to="/Admin/ModifyAdmin" @click.native="ModifyAdmin">&nbsp&nbsp&nbsp&nbsp<span
+                class="fa fa-caret-right"></span> 更换管理员
+              </router-link>
             </ul>
           </li>
 
@@ -50,11 +49,12 @@
             class="fa fa-fw fa-legal"></i> 功能<i class="fa fa-collapse"></i></a></li>
           <li v-show="SecondShow">
             <ul class="legal-menu nav nav-list collapse in">
-              <router-link to="/Admin/" tag="li">&nbsp&nbsp&nbsp&nbsp<span class="fa fa-caret-right"></span> 查看实时使用情况
+              <router-link tag="li" to="/Admin/" @click.native="Monitor">&nbsp&nbsp&nbsp&nbsp<span
+                class="fa fa-caret-right"></span> 查看实时使用情况
               </router-link>
-              <!--            <li><a @click="monitor" href="#"><span class="fa fa-caret-right"></span> 查看实时使用情况</a></li>-->
-              <!--            <router-link to="/Admin/" tag="li"><span class="fa fa-caret-right"></span> 查看统计数据</router-link>-->
-              <li><a href="#"><span class="fa fa-caret-right"></span> 查看统计数据</a></li>
+              <router-link tag="li" to="/Admin/ViewData" @click.native="ViewData ">&nbsp&nbsp&nbsp&nbsp<span
+                class="fa fa-caret-right"></span> 查看统计数据
+              </router-link>
             </ul>
           </li>
         </ul>
@@ -90,16 +90,18 @@
         title: '实时使用情况',
         account: '',
         password: '',
-        name: '',
+        name: sessionStorage.getItem("name"),
         SecondShow: false,
         FirstShow: true,
+        AdminActionShow: false,
         NavFirstTimes: 0,
         NavSecondTimes: 0,
+        AdminActionShowTimes: 0,
       }
     },
     methods: {
+      //点击显、隐二级导航
       NavSecond: function () {
-        console.log("hslg");
         if (this.NavSecondTimes == 0) {
           this.SecondShow = true;
           this.NavSecondTimes = 1;
@@ -108,6 +110,7 @@
           this.NavSecondTimes = 0;
         }
       },
+      //点击显、隐二级导航
       NavFirst: function () {
         if (this.NavFirstTimes == 0) {
           this.FirstShow = false;
@@ -116,7 +119,55 @@
           this.FirstShow = true;
           this.NavFirstTimes = 0;
         }
-      }
+      },
+      //点击显、隐二级导航
+      AdminMenu: function () {
+        if (this.AdminActionShowTimes == 0) {
+          this.AdminActionShow = false;
+          this.AdminActionShowTimes = 1;
+        } else {
+          this.AdminActionShow = true;
+          this.AdminActionShowTimes = 0;
+        }
+      },
+      //修改标题
+      ModifyPassword: function () {
+        this.title = "修改密码";
+      },
+      //修改标题
+      Monitor: function () {
+        this.title = "实时使用情况";
+      },
+      //修改标题
+      ModifyPhone: function () {
+        this.title = "修改电话号码"
+      },
+      //修改标题
+      ModifyAccount: function () {
+        this.title = "修改账号"
+      },
+      //修改标题
+      ModifyAdmin: function () {
+        this.title = "更换管理员"
+      },
+      //修改标题
+      ViewData: function () {
+        this.title = "统计数据"
+      },
+      //修改标题
+      AdminLogout: function () {
+        this.title = "账号注销"
+      },
+      //退出
+      AdminSignOut: function () {
+        sessionStorage.clear();
+        // this.title = "统计数据"
+      },
+      //鼠标移开时隐藏
+      hidden: function () {
+        this.AdminActionShow = false;
+        this.AdminActionShowTimes = 1;
+      },
     }
   }
 </script>
@@ -127,15 +178,41 @@
   @import "../../static/stylesheets/theme.css";
   @import "../../static/stylesheets/premium.css";
 
-  /*#line-chart {*/
-  /*  height: 300px;*/
-  /*  width: 800px;*/
-  /*  margin: 0px auto;*/
-  /*  margin-top: 1em;*/
-  /*}*/
-
-  .navbar-default .navbar-brand,
-  .navbar-default .navbar-brand:hover {
-    color: #fff;
+  .navbar {
+    background: #4d5b76;
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #4d5b76), color-stop(1, #6f80a1));
+    background: -ms-linear-gradient(bottom, #4d5b76, #6f80a1);
+    /*background: -moz-linear-gradient(center bottom, #4d5b76 0%, #6f80a1 100%);*/
+    background: -o-linear-gradient(bottom, #4d5b76, #6f80a1);
+    filter: progid:dximagetransform.microsoft.gradient(startColorStr='#e3e3e3', EndColorStr='#ffffff');
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#6f80a1',EndColorStr='#4d5b76')";
   }
+
+  /*.navbar-brand{*/
+  /*  padding: 15px 15px 15px 15px;*/
+  /*}*/
+  .adminMenu {
+    background: whitesmoke;
+    position: absolute;
+    width: 165px;
+    right: 0px;
+    display: inline;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .adminMenu li {
+    padding-left: 5px;
+    padding-top: 5px;
+  }
+
+  .adminMenu li:hover {
+    background: grey;
+  }
+
+  .adminMenu
+  .nav-list li:hover {
+    background: dodgerblue;
+  }
+
 </style>
