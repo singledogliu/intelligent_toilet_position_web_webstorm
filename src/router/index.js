@@ -4,13 +4,16 @@ import VueResource from 'vue-resource'
 import AdminLogin from '../components/AdminLogin'
 import AdminRegister from '../components/AdminRegister'
 import Admin from '../components/Admin'
-import Monitor from '../components/Monitor'
-import ModifyPassword from '../components/ModifyPassword'
-import ModifyPhone from '../components/ModifyPhone'
-import ModifyAccount from '../components/ModifyAccount'
-import ModifyAdmin from '../components/ModifyAdmin'
-import ViewData from '../components/ViewData'
+import Monitor from '../components/AdminFeatures/Monitor'
+import ModifyPassword from '../components/AdminModify/ModifyPassword'
+import ModifyPhone from '../components/AdminModify/ModifyPhone'
+import ModifyAccount from '../components/AdminModify/ModifyAccount'
+import ModifyAdmin from '../components/AdminModify/ModifyAdmin'
+import ViewData from '../components/AdminFeatures/ViewData'
 import AdminLogout from '../components/AdminLogout'
+import AddToilet from '../components/AdminFeatures/AddToilet'
+import AddToiletPosition from '../components/AdminFeatures/AddToiletPosition'
+
 
 
 Vue.use(Router)
@@ -75,6 +78,16 @@ const router = new Router({
           path: '/Admin/AdminLogout',
           name: 'AdminLogout',
           component: AdminLogout,
+        },
+        {
+          path: '/Admin/AddToilet',
+          name: 'AddToilet',
+          component: AddToilet,
+        },
+        {
+          path: '/Admin/AddToiletPosition',
+          name: 'AddToiletPosition',
+          component: AddToiletPosition,
         },
       ]
     },

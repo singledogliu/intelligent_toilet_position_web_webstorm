@@ -12,9 +12,9 @@
               <i class="fa fa-caret-down"></i>
             </a>
 
-            <ul class="adminMenu" v-show="AdminActionShow" @mouseleave="hidden">
-              <router-link tag="li" to="/" @click.native="AdminSignOut">&nbspSign out</router-link>
-              <router-link tabindex="-1" tag="li" to="/Admin/AdminLogout" @click.native="AdminLogout">&nbspLogout
+            <ul @mouseleave="hidden" class="adminMenu" v-show="AdminActionShow">
+              <router-link @click.native="AdminSignOut" tag="li" to="/">&nbspSign out</router-link>
+              <router-link @click.native="AdminLogout" tabindex="-1" tag="li" to="/Admin/AdminLogout">&nbspLogout
               </router-link>
             </ul>
           </li>
@@ -29,16 +29,16 @@
             class="fa fa-fw fa-dashboard"></i> 修改信息<i class="fa fa-collapse"></i></a></li>
           <li v-show="FirstShow">
             <ul class="dashboard-menu nav nav-list collapse in">
-              <router-link tag="li" to="/Admin/ModifyPassword" @click.native="ModifyPassword">&nbsp&nbsp&nbsp&nbsp<span
+              <router-link @click.native="ModifyPassword" tag="li" to="/Admin/ModifyPassword">&nbsp&nbsp&nbsp&nbsp<span
                 class="fa fa-caret-right"></span> 修改密码
               </router-link>
-              <router-link tag="li" to="/Admin/ModifyPhone" @click.native="ModifyPhone">&nbsp&nbsp&nbsp&nbsp<span
+              <router-link @click.native="ModifyPhone" tag="li" to="/Admin/ModifyPhone">&nbsp&nbsp&nbsp&nbsp<span
                 class="fa fa-caret-right"></span> 修改电话号码
               </router-link>
-              <router-link tag="li" to="/Admin/ModifyAccount" @click.native="ModifyAccount">&nbsp&nbsp&nbsp&nbsp<span
+              <router-link @click.native="ModifyAccount" tag="li" to="/Admin/ModifyAccount">&nbsp&nbsp&nbsp&nbsp<span
                 class="fa fa-caret-right"></span> 修改账号
               </router-link>
-              <router-link tag="li" to="/Admin/ModifyAdmin" @click.native="ModifyAdmin">&nbsp&nbsp&nbsp&nbsp<span
+              <router-link @click.native="ModifyAdmin" tag="li" to="/Admin/ModifyAdmin">&nbsp&nbsp&nbsp&nbsp<span
                 class="fa fa-caret-right"></span> 更换管理员
               </router-link>
             </ul>
@@ -49,11 +49,18 @@
             class="fa fa-fw fa-legal"></i> 功能<i class="fa fa-collapse"></i></a></li>
           <li v-show="SecondShow">
             <ul class="legal-menu nav nav-list collapse in">
-              <router-link tag="li" to="/Admin/" @click.native="Monitor">&nbsp&nbsp&nbsp&nbsp<span
+              <router-link @click.native="Monitor" tag="li" to="/Admin/">&nbsp&nbsp&nbsp&nbsp<span
                 class="fa fa-caret-right"></span> 查看实时使用情况
               </router-link>
-              <router-link tag="li" to="/Admin/ViewData" @click.native="ViewData ">&nbsp&nbsp&nbsp&nbsp<span
+              <router-link @click.native="ViewData " tag="li" to="/Admin/ViewData">&nbsp&nbsp&nbsp&nbsp<span
                 class="fa fa-caret-right"></span> 查看统计数据
+              </router-link>
+              <router-link @click.native="AddToilet " tag="li" to="/Admin/AddToilet">&nbsp&nbsp&nbsp&nbsp<span
+                class="fa fa-caret-right"></span> 添加厕所信息
+              </router-link>
+              <router-link @click.native="AddToiletPosition " tag="li" to="/Admin/AddToiletPosition">
+                &nbsp&nbsp&nbsp&nbsp<span
+                class="fa fa-caret-right"></span> 添加厕位信息
               </router-link>
             </ul>
           </li>
@@ -163,6 +170,13 @@
         sessionStorage.clear();
         // this.title = "统计数据"
       },
+      //修改标题
+      AddToilet: function () {
+        this.title = "添加厕所信息"
+      },
+      AddToiletPosition: function () {
+        this.title = "添加厕位信息"
+      },
       //鼠标移开时隐藏
       hidden: function () {
         this.AdminActionShow = false;
@@ -188,9 +202,6 @@
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#6f80a1',EndColorStr='#4d5b76')";
   }
 
-  /*.navbar-brand{*/
-  /*  padding: 15px 15px 15px 15px;*/
-  /*}*/
   .adminMenu {
     background: whitesmoke;
     position: absolute;
