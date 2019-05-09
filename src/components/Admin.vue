@@ -2,13 +2,14 @@
   <div>
     <div class="navbar navbar-default" role="navigation">
       <div class="navbar-header">
-        <a class="" href="#"><span class="navbar-brand"/></a></div>
+        <a class="" href="#"><span class="Title">厕位智能引导系统</span>
+        </a></div>
       <div class="navbar-collapse collapse" style="height: 1px;">
         <ul class="nav navbar-nav navbar-right" id="main-menu">
           <li class="dropdown hidden-xs" v-on:click="AdminMenu">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="glyphicon glyphicon-user padding-right-small"
-                              style="position:relative;top: 3px;"></span> {{name}}
+              <span class="glyphicon glyphicon-user padding-right-small"
+                    style="position:relative;top: 3px;"></span> {{name}}
               <i class="fa fa-caret-down"></i>
             </a>
 
@@ -58,10 +59,10 @@
               <router-link @click.native="AddToilet " tag="li" to="/Admin/AddToilet">&nbsp&nbsp&nbsp&nbsp<span
                 class="fa fa-caret-right"></span> 添加厕所信息
               </router-link>
-              <router-link @click.native="AddToiletPosition " tag="li" to="/Admin/AddToiletPosition">
-                &nbsp&nbsp&nbsp&nbsp<span
-                class="fa fa-caret-right"></span> 添加厕位信息
-              </router-link>
+              <!--              <router-link @click.native="AddToiletPosition " tag="li" to="/Admin/AddToiletPosition">-->
+              <!--                &nbsp&nbsp&nbsp&nbsp<span-->
+              <!--                class="fa fa-caret-right"></span> 添加厕位信息-->
+              <!--              </router-link>-->
             </ul>
           </li>
         </ul>
@@ -224,6 +225,21 @@
   .adminMenu
   .nav-list li:hover {
     background: dodgerblue;
+  }
+
+  .navbar-header {
+    padding-top: 4px;
+    margin-left: 10%;
+    text-align: center;
+  }
+
+  .Title {
+    font-size: xx-large;
+    color: whitesmoke;
+  }
+
+  #page-stats {
+    height: auto;
   }
 
 </style>

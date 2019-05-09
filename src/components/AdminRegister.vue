@@ -88,7 +88,7 @@
       }
     },
     methods: {
-      register: function (event) {
+      register: function () {
         if (this.account == null || this.account == '') {
           alert("账号为空，请填写账号");
         } else if (this.password == null || this.password == '') {
@@ -121,7 +121,6 @@
             )
             .then(function (res) {
               var stat = res.bodyText.split(",")[0];
-              var adminName = res.bodyText.split(",")[1];
               if (stat == "该账号已存在") {
                 alert("该账号已存在,请重新注册");
               }
@@ -129,14 +128,12 @@
                 alert("注册失败，请重试");
               }
               if (stat == "注册成功") {
-                sessionStorage.setItem("name", adminName);
+                sessionStorage.setItem("name", this.name);
+                sessionStorage.setItem("account", this.account);
+                sessionStorage.setItem("regionalName", this.regionalCode);
                 //跳转到管理员功能界面
                 this.$router.push({
                   path: '/Admin',
-                  query: {
-                    name: adminName,
-                    account: this.account
-                  }
                 })
               }
             });

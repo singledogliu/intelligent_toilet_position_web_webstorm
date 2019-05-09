@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "iview": "^3.4.1",
     "jquery": "^3.4.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.6"
@@ -19,6 +20,7 @@
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-loader": "^7.1.1",
+    "babel-plugin-import": "^1.11.0",
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-runtime": "^6.22.0",
     "babel-plugin-transform-vue-jsx": "^3.5.0",
@@ -31,6 +33,7 @@
     "file-loader": "^1.1.4",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^4.0.0-beta.5",
+    "iview-loader": "^1.2.2",
     "node-notifier": "^5.1.2",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "ora": "^1.2.0",

@@ -49,11 +49,14 @@
               }
             )
             .then(function (res) {
-              var stat = res.bodyText.split(",")[0];
-              var adminName = res.bodyText.split(",")[1];
+              console.log(res)
+              const stat = res.body.stat;
+              const adminName = res.body.adminName;
+              const regionalName = res.body.regionalName
               if (stat == "登录成功") {
                 sessionStorage.setItem("name", adminName);
                 sessionStorage.setItem("account", this.account);
+                sessionStorage.setItem("regionalName", regionalName);
                 //跳转到管理员功能界面
                 this.$router.push({
                   path: '/Admin',
@@ -62,6 +65,8 @@
                   //   account: this.account
                   // }
                 })
+              } else {
+                console.log(res.body.reason);
               }
             });
         }
