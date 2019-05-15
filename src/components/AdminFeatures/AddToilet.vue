@@ -84,6 +84,7 @@
           }
         );
         if (this.isOk == true) {
+          console.log(JSON.stringify(this.inputData))
           this.$http
             .post(
               "http://127.0.0.1:8080/Admin/AddToiletInfo",
@@ -97,7 +98,7 @@
             )
             .then(function (res) {
               if (res.data == (this.inputData.length + resultNum)) {
-                alert("修改成功");
+                alert("添加成功");
                 this.total = 1;
                 this.inputData[0] = {
                   toiletCode: '',

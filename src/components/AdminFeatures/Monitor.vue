@@ -2,22 +2,40 @@
   <div class="hello">
     <div class="selectToilet">
       <span style="color: #4a6bae">请选择欲查看的厕所:</span>
-      <select v-model="theChoose" @change="changeToiletCode">
-        <option v-for="toiletCode in toilet">{{toiletCode.toiletCode}}</option>
-      </select>
+      <el-select @change="changeToiletCode" v-model="theChoose">
+        <el-option :key="toiletCode.toiletCode"
+                   :label="toiletCode.toiletCode"
+                   :value="toiletCode.toiletCode"
+                   v-for="toiletCode in toilet"></el-option>
+      </el-select>
     </div>
-    <div class="men">
-      <div class="sexTitle"><span>男</span></div>
-      <button v-for="(man,index) in men">
-        <img :src="man.imgUrl" class="toiletImg">
-      </button>
-    </div>
-    <div class="women">
-      <div class="sexTitle"><span>女</span></div>
-      <button v-for="(woman,index) in women">
-        <img :src="woman.imgUrl" class="toiletImg">
-      </button>
-    </div>
+    <el-row :gutter="10">
+      <el-col :span="12">
+        <div class="grid-content bg-purple">
+          <div class="men">
+            <div class="sexTitle"><span>男</span></div>
+            <button v-for="(man,index) in men">
+              <img :src="man.imgUrl" class="toiletImg"><br>
+              <span class="toieltPositionTitle">{{man.toiletPositionCode}}</span>
+            </button>
+          </div>
+        </div>
+      </el-col>
+      <div class="grid-content bg-purple">
+
+      </div>
+      <el-col :span="12">
+        <div class="women">
+          <div class="sexTitle"><span>女</span></div>
+          <button v-for="(woman,index) in women">
+            <img :src="woman.imgUrl" class="toiletImg"><br>
+            <span class="toieltPositionTitle">{{woman.toiletPositionCode}}</span>
+          </button>
+        </div>
+      </el-col>
+    </el-row>
+
+
   </div>
 </template>
 
@@ -221,28 +239,23 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .men {
-    /*position: inherit;*/
-    /*display: inline;*/
-    /*line-height: 100px;*/
-    /*float:left;*/
-    width: 48%;
-    margin-right: 1%;
-    border: 1px solid black;
-    /*left: 0;*/
-    top: 5%;
-  }
+  /*.men {*/
+  /*  width: 48%;*/
+  /*  margin-right: 1%;*/
+  /*  border: 1px solid black;*/
+  /*  top: 5%;*/
+  /*}*/
 
-  .women {
-    position: absolute;
-    /*display: inline;*/
-    /*line-height: 100px;*/
-    /*float: right;*/
-    width: 48%;
-    margin-left: 1%;
-    border: 1px solid black;
-    right: 3%;
-    top: 11.5%;
+  /*.women {*/
+  /*  position: absolute;*/
+  /*  width: 48%;*/
+  /*  margin-left: 1%;*/
+  /*  border: 1px solid black;*/
+  /*  right: 3%;*/
+  /*  top: 11.5%;*/
+  /*}*/
+  .toieltPositionTitle {
+    text-align: center;
   }
 
   .sexTitle {
@@ -250,20 +263,15 @@
     padding-top: 2px;
     padding-bottom: 2px;
     margin-bottom: 5px;
-    /*margin-left: 10px;*/
-    /*margin-right: 10px;*/
     font-size: xx-large;
     border-bottom: 1px solid black;
-    /*border-left: 1px solid black;*/
-    /*border-right: 1px solid black;*/
     text-align: center;
   }
 
   .toiletImg {
-    width: 70px;
-    height: 70px;
+    width: 66px;
+    height: 66px;
     margin-right: 1px;
-    /*border-bottom: 1px red;*/
   }
 
   .hello {

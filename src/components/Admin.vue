@@ -242,4 +242,7 @@
     height: auto;
   }
 
+  .main-content {
+    width: auto;
+  }
 </style>

@@ -49,7 +49,6 @@
               }
             )
             .then(function (res) {
-              console.log(res)
               const stat = res.body.stat;
               const adminName = res.body.adminName;
               const regionalName = res.body.regionalName
@@ -66,7 +65,7 @@
                   // }
                 })
               } else {
-                console.log(res.body.reason);
+                alert(res.body.reason);
               }
             });
         }
