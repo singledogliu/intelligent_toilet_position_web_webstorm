@@ -1,6 +1,6 @@
 <template>
   <div class="viewData">
-    <el-row :gutter="10">
+    <el-row :gutter="4">
       <el-col :span="6">
         <div class="grid-content bg-purple">
           <div class="selectToilet">
@@ -56,6 +56,12 @@
       </el-col>
       <el-col :span="6">
         <div class="grid-content bg-purple">
+          <el-radio label="times" v-model="timesOrTime">查看次数</el-radio>
+          <el-radio label="time" v-model="timesOrTime">查看时长</el-radio>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple">
           <el-button @click="getInfo">查看</el-button>
         </div>
       </el-col>
@@ -106,6 +112,7 @@
         regionalName: '',
         radio: "month",
         count: [],
+        timesOrTime: "times"
       };
     },
 
@@ -132,6 +139,7 @@
         var YdataMen = [];
         var YdataWomen = [];
         var Xname = "日";
+        var Yname = "次数"
 
         if (this.startDate === '' || this.startDate == null) {
           alert("请选择开始时间");
@@ -181,6 +189,9 @@
           if (this.radio === "all") {
             Xname = "时间段"
           }
+          if (this.timesOrTime === "time") {
+            Yname = "时长/分钟";
+          }
           this.$http
             .post(
               "http://127.0.0.1:8080/Admin/getToiletStatistics",
@@ -191,6 +202,7 @@
                 endDate: this.endDate.toString(),
                 action: theAction,
                 unit: this.radio,
+                timesOrTime: this.timesOrTime,
               },
               {
                 emulateJSON: true,
@@ -204,8 +216,13 @@
                 // console.log(res.data);
                 if (this.radio === "all") {
                   Xdata.push(this.startDate + '~' + this.endDate);
-                  YdataMen.push(res.data[0]);
-                  YdataWomen.push(res.data[1]);
+                  if (this.timesOrTime === "times") {
+                    YdataMen.push(res.data[0]);
+                    YdataWomen.push(res.data[1]);
+                  } else {
+                    YdataMen.push(res.data[0] / 1000 / 60);
+                    YdataWomen.push(res.data[1] / 1000 / 60);
+                  }
                 } else {
                   for (var i = 0; i < res.data.length; i++) {
                     if (theAction === "like") {
@@ -223,8 +240,13 @@
                         }
                       }
                     }
-                    YdataMen.push(res.data[i][0]);
-                    YdataWomen.push(res.data[i][1]);
+                    if (this.timesOrTime === "times") {
+                      YdataMen.push(res.data[i][0]);
+                      YdataWomen.push(res.data[i][1]);
+                    } else {
+                      YdataMen.push(res.data[i][0] / 1000 / 60);
+                      YdataWomen.push(res.data[i][1] / 1000 / 60);
+                    }
                   }
                 }
               }
@@ -251,7 +273,7 @@
                   data: Xdata
                 },
                 yAxis: {
-                  name: '次数',
+                  name: Yname,
                   type: 'value',
                   boundaryGap: [0, 0.01]
                 },
