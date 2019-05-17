@@ -5,7 +5,7 @@ import router from './router'
 import VueResource from 'vue-resource'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-// import 'jquery'
+import 'jquery'
 // import '../static/js/GoEasy'
 // import iView from 'iview'
 // import 'iview/dist/styles/iview.css'

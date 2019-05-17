@@ -61,7 +61,7 @@
               </router-link>
               <!--              <router-link @click.native="AddToiletPosition " tag="li" to="/Admin/AddToiletPosition">-->
               <!--                &nbsp&nbsp&nbsp&nbsp<span-->
-              <!--                class="fa fa-caret-right"></span> 添加厕位信息-->
+              <!--                class="fa fa-caret-right"></span> 更改检测时间-->
               <!--              </router-link>-->
             </ul>
           </li>
@@ -81,11 +81,14 @@
         </div>
       </div>
     </div>
+    <div id="theAlert">
+      <!--      <span>嚯嚯嚯</span>-->
+    </div>
   </div>
 </template>
 
 <script>
-  // import $ from 'jquery';
+  import $ from 'jquery';
   export default {
     name: "Admin",
     computed: {
@@ -99,15 +102,105 @@
         account: '',
         password: '',
         name: sessionStorage.getItem("name"),
+        regionalName: sessionStorage.getItem("regionalName"),
         SecondShow: false,
         FirstShow: true,
         AdminActionShow: false,
         NavFirstTimes: 0,
         NavSecondTimes: 0,
         AdminActionShowTimes: 0,
+        tableData: [],
+        toiletCode: "",
+        // isBad:true,
       }
     },
+    mounted() {
+      this.GoEasy();
+      // console.log("wojianlile");
+      // const regionaName = this.regionalName;
+      // var isBad = this.isBad;
+      // var tableData = this.tableData;
+      // var toiletCode = this.toiletCode;
+      // const goEasy = new GoEasy({
+      //   appkey: 'BS-d8ce157d507c42f58dd9e98118e22c67'
+      // });
+      // goEasy.subscribe({
+      //   channel: 'maybeBadToiletPosition',
+      //   onMessage: function (message) {
+      //     // console.log(message.content);
+      //     const useInfo = eval('(' + message.content + ')');
+      //     if (useInfo.regionalName === regionaName){
+      //       const a = confirm("有厕位疑似故障，请查看");
+      //       if (a === true){
+      //         // console.log("吼吼吼");
+      //         tableData = useInfo.maybeBadToiletPosition;
+      //         toiletCode = useInfo.toiletCode;
+      //         isBad = true;
+      //         // console.log(this.tableData);
+      //         // console.log(this.toiletCode);
+      //         // console.log(this.isBad);
+      //         // this.hah();
+      //       }
+      //       else {
+      //       }
+      //     }
+      //   },
+      // });
+      // this.isBad = isBad;
+    },
+
     methods: {
+      // hah(){
+      //   console.log(this.tableData);
+      // },
+      GoEasy() {
+        // console.log("wojianlile");
+        var regionalName = this.regionalName;
+        var isBad = this.isBad;
+        var tableData = this.tableData;
+        var toiletCode = this.toiletCode;
+        const goEasy = new GoEasy({
+          appkey: 'BS-d8ce157d507c42f58dd9e98118e22c67'
+        });
+        goEasy.subscribe({
+          channel: 'maybeBadToiletPosition',
+          onMessage: function (message) {
+            console.log(message.content);
+            const useInfo = eval('(' + message.content + ')');
+            if (useInfo.regionalName === regionalName) {
+              const a = confirm("有厕位疑似故障，请查看");
+              if (a === true) {
+                // var check = document.getElementById("theAlert");
+                // check.style.cssText("display:block");
+                // check.innerHTML = "<span>hah</span>"
+                $("#theAlert").css("display", "block");
+                $("#theAlert").html("");
+                $("#theAlert").append("<span>" + useInfo.toiletCode + "</span><br>");
+                $("#theAlert").append("<table>");
+                $("#theAlert").append("<tr><th>性别</th><th>厕位编号</th><th>最近使用时间</th></tr>");
+                for (var i = 0; i < useInfo.maybeBadToiletPosition.length; i++) {
+                  $("#theAlert").append("<tr><th>" + useInfo.maybeBadToiletPosition[i].gender + "</th><th>" + useInfo.maybeBadToiletPosition[i].toiletCode + "</th><th>" + useInfo.maybeBadToiletPosition[i].startTime + "</th></tr>");
+                }
+                $("#theAlert").append("</table>");
+                $("#theAlert").append("<button class='esc'>取消</button>");
+                $(".esc").click(function () {
+                  $("#theAlert").html("");
+                  $("#theAlert").css("display", "none");
+                });
+                // console.log("吼吼吼");
+                // tableData = useInfo.maybeBadToiletPosition;
+                // this.toiletCode = useInfo.toiletCode;
+                isBad = false;
+                // console.log(tableData);
+                // console.log(toiletCode);
+                // console.log(isBad);
+
+              } else {
+              }
+            }
+          },
+        });
+      },
       //点击显、隐二级导航
       NavSecond: function () {
         if (this.NavSecondTimes == 0) {
@@ -242,6 +335,16 @@
     height: auto;
   }
 
+  #theAlert {
+    height: 400px;
+    position: absolute;
+    background: whitesmoke;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    overflow-y: scroll;
+  }
   .main-content {
     width: auto;
   }
