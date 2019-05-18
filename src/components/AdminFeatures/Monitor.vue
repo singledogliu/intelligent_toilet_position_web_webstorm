@@ -16,7 +16,8 @@
             <div class="sexTitle"><span>男</span></div>
             <button v-for="(man,index) in men">
               <img :src="man.imgUrl" class="toiletImg"><br>
-              <span class="toieltPositionTitle">{{man.toiletPositionCode}}</span>
+              <span class="toieltPositionTitle">{{man.toiletPositionCode}}</span><br>
+              <span class="toieltPositionTitle">{{man.startTime}}</span>
             </button>
           </div>
         </div>
@@ -29,7 +30,8 @@
           <div class="sexTitle"><span>女</span></div>
           <button v-for="(woman,index) in women">
             <img :src="woman.imgUrl" class="toiletImg"><br>
-            <span class="toieltPositionTitle">{{woman.toiletPositionCode}}</span>
+            <span class="toieltPositionTitle">{{woman.toiletPositionCode}}</span><br>
+            <span class="toieltPositionTitle">{{woman.startTime}}</span>
           </button>
         </div>
       </el-col>
@@ -60,6 +62,16 @@
       await this.getToiletInfo();
     },
     methods: {
+      formatDate(now) {
+        var myDate = new Date(now);
+        var year = myDate.getFullYear(),
+          month = myDate.getMonth() + 1,
+          date = myDate.getDate(),
+          hour = myDate.getHours(),
+          minute = myDate.getMinutes(),
+          second = myDate.getSeconds();
+        return year + "/" + month + "/" + date + " " + hour + ":" + minute;
+      },
       //实时消息接收
       GoEasy() {
         var women = this.women;
@@ -82,7 +94,7 @@
                       women[i].startTime = useInfo.startTime;
                     } else {
                       women[i].imgUrl = '../../static/img/women-nobody.png';
-                      women[i].startTime = useInfo.endTime;
+                      women[i].endTime = useInfo.endTime;
                     }
                   }
                 }
@@ -94,7 +106,7 @@
                       men[j].startTime = useInfo.startTime;
                     } else {
                       men[j].imgUrl = '../../static/img/men-nobody.png';
-                      men[j].startTime = useInfo.endTime;
+                      men[j].endTime = useInfo.endTime;
                     }
                   }
                 }
@@ -198,8 +210,8 @@
                 if (res.data[i].gender == '男') {
                   for (var j = 0; j < this.men.length; j++) {
                     if (this.men[j].toiletPositionCode == res.data[i].toiletPositionCode) {
-                      this.men[j].startTime = res.data[i].startTime;
-                      this.men[j].endTime = res.data[i].endTime;
+                      this.men[j].startTime = this.formatDate(res.data[i].startTime);
+                      this.men[j].endTime = this.formatDate(res.data[i].endTime);
                       //结束时间为空表示正在使用中
                       if (res.data[i].endTime == '' || res.data[i].endTime == null) {
                         this.men[j].imgUrl = "../../static/img/men-occupy.png";
@@ -209,7 +221,7 @@
                 } else {
                   for (var k = 0; k < this.women.length; k++) {
                     if (this.women[k].toiletPositionCode == res.data[i].toiletPositionCode) {
-                      this.women[k].startTime = res.data[i].startTime;
+                      this.women[k].startTime = this.formatDate(res.data[i].startTime);
                       this.women[k].endTime = res.data[i].endTime;
                       //结束时间为空表示正在使用中
                       if (res.data[i].endTime == '' || res.data[i].endTime == null) {
